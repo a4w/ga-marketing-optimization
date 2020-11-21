@@ -33,6 +33,7 @@ public class ChannelAllocationChromosomeMutation implements IMutationAlgorithm<C
                     newXi = Xi - delta;
                 else
                     newXi = Xi + delta;
+
             }
         }
 
