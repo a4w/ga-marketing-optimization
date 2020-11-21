@@ -22,8 +22,8 @@ class TwoPointCrossOver implements ICrossOverAlgorithm<ChannelAllocationChromoso
             children.add(new ChannelAllocationChromosome(parent1));
             children.add(new ChannelAllocationChromosome(parent2));
             for (int i = p1; i < p2; ++i) {
-                children.get(0).genes.set(i, parent2.genes.get(i));
-                children.get(1).genes.set(i, parent1.genes.get(i));
+                children.get(0).getGenes().set(i, parent2.getGenes().get(i));
+                children.get(1).getGenes().set(i, parent1.getGenes().get(i));
             }
             return children;
         } else {
