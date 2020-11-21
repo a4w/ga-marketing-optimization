@@ -13,7 +13,7 @@ class ChannelAllocationChromosomeFitnessCalculator implements IFitnessCalculator
         float total = 0;
         List<Float> genes = chromosome.getGenes();
         for (int i = 0; i < genes.size(); ++i) {
-            total += genes.get(i) * data.getChannelROI(i);
+            total += genes.get(i) * data.getROIat(i);
         }
         return total;
         return 0;
