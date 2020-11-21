@@ -16,7 +16,6 @@ class ChannelAllocationChromosomeFitnessCalculator implements IFitnessCalculator
             total += genes.get(i) * data.getChannelROI(i);
         }
         return total;
-        return 0;
     }
 
 }
