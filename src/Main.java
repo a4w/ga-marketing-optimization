@@ -49,7 +49,7 @@ class Main {
         config.setSelectionsPercent(0.8f);
         config.setNumberOfGenerations(1000);
         config.setMutationProbability(0.01);
-        config.setInitialPopulationSize(1000); // TODO Adjust this
+        config.setInitialPopulationSize(1000);
         config.setCrossOverProbability(0.85f);
         config.setFitnessCalculator(new ChannelAllocationChromosomeFitnessCalculator(metaData));
         /*
