@@ -6,27 +6,30 @@ class ChannelAllocationChromosome implements IChromosome {
     private List<Float> genes;
     private MetaData metaData;
 
-    ChannelAllocationChromosome(List<Float> rhs, MetaData metaData)
-    {
+    ChannelAllocationChromosome(List<Float> rhs, MetaData metaData) {
         genes = rhs;
         this.metaData = metaData;
     }
 
-    ChannelAllocationChromosome(MetaData metaData)
-    {
+    ChannelAllocationChromosome(MetaData metaData) {
         genes = new ArrayList<>();
         this.metaData = metaData;
     }
 
+    ChannelAllocationChromosome(ChannelAllocationChromosome other) {
+        this.genes = new ArrayList<>(other.genes.size());
+        for (int i = 0; i < other.genes.size(); ++i) {
+            this.genes.set(i, other.genes.get(i));
+        }
+    }
+
     @Override
-    public String toString()
-    {
+    public String toString() {
         String ret = "";
         ret += "{";
-        for(int i = 0; i < genes.size(); i++)
-        {
-            ret += "["+ i + "]" + " = " + genes.get(i);
-            if(i != genes.size() - 1)
+        for (int i = 0; i < genes.size(); i++) {
+            ret += "[" + i + "]" + " = " + genes.get(i);
+            if (i != genes.size() - 1)
                 ret += ", ";
         }
         ret += "}";
@@ -36,11 +39,11 @@ class ChannelAllocationChromosome implements IChromosome {
 
     @Override
     public boolean isValid() {
-        if(genes.isEmpty())
+        if (genes.isEmpty())
             return false;
 
         Float sum = 0f;
-        for(Float f : genes)
+        for (Float f : genes)
             sum += f;
 
         return sum <= metaData.getTotalBudget();
@@ -54,8 +57,7 @@ class ChannelAllocationChromosome implements IChromosome {
         return genes;
     }
 
-    public Float getGene(int i)
-    {
+    public Float getGene(int i) {
         return genes.get(i);
     }
 
