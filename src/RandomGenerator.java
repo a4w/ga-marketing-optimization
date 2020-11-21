@@ -16,7 +16,7 @@ class RandomGenerator {
         return RandomGenerator.randInt(0, arr.size() - 1);
     }
 
-    public float rand(float a, float b) {
+    public static float randFloat(float a, float b) {
         Random r = new Random();
         return (a + r.nextFloat() * (b - a));
     }
