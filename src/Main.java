@@ -35,9 +35,9 @@ class Main {
             String lo, hi;
             lo = sc.next();
             hi = sc.next();
-            Limit l = new Limit(lo.equals("x") ? 0 : Float.valueOf(lo),
-                    hi.equals("x") ? totalBudget : Float.valueOf(hi));
-            limit_list.add(l);
+            Limit limit = new Limit(lo.equals("x") ? 0 : Float.valueOf(lo),
+                    hi.equals("x") ? totalBudget : (Float.valueOf(hi) / 100.0f) * totalBudget);
+            limit_list.add(limit);
         }
 
         sc.close();
