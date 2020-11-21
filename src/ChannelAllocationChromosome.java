@@ -61,4 +61,7 @@ class ChannelAllocationChromosome implements IChromosome {
         return genes.get(i);
     }
 
+    public MetaData getMetaData() {
+        return metaData;
+    }
 }
