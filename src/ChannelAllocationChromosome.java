@@ -4,9 +4,22 @@ import java.util.List;
 class ChannelAllocationChromosome implements IChromosome {
 
     public List<Float> genes;
-    ChannelAllocationChromosome() { genes = new ArrayList<>();}
-    ChannelAllocationChromosome(int initialCapacity){ genes = new ArrayList<>(initialCapacity); }
-    ChannelAllocationChromosome(List<Float> rhs) {genes = rhs;}
+
+    ChannelAllocationChromosome() {
+        genes = new ArrayList<>();
+    }
+
+    ChannelAllocationChromosome(int initialCapacity) {
+        genes = new ArrayList<>(initialCapacity);
+    }
+
+    ChannelAllocationChromosome(List<Float> rhs) {
+        genes = rhs;
+    }
+
+    public List<Float> getGenes() {
+        return this.genes;
+    }
 
     @Override
     public String toString() {
