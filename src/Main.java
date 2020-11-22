@@ -52,7 +52,7 @@ class Main {
         config.setChromosomeGenerator(new ChannelAllocationChromosomeGenerator(metaData));
         config.setSelectionsPercent(0.75f);
         config.setNumberOfGenerations(1000);
-        config.setMutationProbability(0.01);
+        config.setMutationProbability(0.01f);
         config.setInitialPopulationSize(1000);
         config.setCrossOverProbability(0.85f);
         IFitnessCalculator<ChannelAllocationChromosome> fitnessCalculator = new ChannelAllocationChromosomeFitnessCalculator(
