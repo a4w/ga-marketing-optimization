@@ -19,6 +19,7 @@ class ChannelAllocationChromosome implements IChromosome {
     ChannelAllocationChromosome(ChannelAllocationChromosome other) {
         this.genes = new ArrayList<>(other.genes.size());
         this.genes.addAll(other.genes);
+        this.metaData = other.metaData;
     }
 
     @Override

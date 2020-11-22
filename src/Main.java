@@ -58,10 +58,7 @@ class Main {
         IFitnessCalculator<ChannelAllocationChromosome> fitnessCalculator = new ChannelAllocationChromosomeFitnessCalculator(
                 metaData);
         config.setFitnessCalculator(fitnessCalculator);
-        /*
-         * config.setMutationAlgorithm(new
-         * ChannelAllocationChromosomeUniformMutation(metaData));
-         */
+        config.setMutationAlgorithm(new NonUniformMutation(metaData, config));
         config.setCrossOverAlgorithm(new TwoPointCrossOver());
         config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
         config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>(0.25f, fitnessCalculator));
