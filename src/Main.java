@@ -62,7 +62,6 @@ class Main {
          * config.setMutationAlgorithm(new
          * ChannelAllocationChromosomeUniformMutation(metaData));
          */
-        config.setMutationAlgorithm(new DummyMutator());
         config.setCrossOverAlgorithm(new TwoPointCrossOver());
         config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
         config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>(0.25f, fitnessCalculator));
@@ -106,13 +105,4 @@ class Main {
         }
 
     }
-}
-
-class DummyMutator implements IMutationAlgorithm<ChannelAllocationChromosome> {
-
-    @Override
-    public ChannelAllocationChromosome mutate(ChannelAllocationChromosome chromosome, double geneMutationProbability) {
-        return chromosome;
-    }
-
 }
