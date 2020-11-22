@@ -1,4 +1,5 @@
 import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -68,7 +69,7 @@ class Main {
         try {
             // Open file (with timestamp as name)
             String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss").format(LocalDateTime.now());
-            FileWriter output = new FileWriter(timestamp + ".log");
+            FileWriter output = new FileWriter("logs.txt");
 
             // Run GA and maximize fitness across runs
             ChannelAllocationChromosome overallWinner = null;
@@ -97,8 +98,8 @@ class Main {
             System.out.print(end_log_line);
             output.write(end_log_line);
             output.close();
-        } catch (Exception e) {
-            System.err.println("Couldn't open file");
+        } catch (IOException e) {
+            System.err.println("Couldn't open file: " + e.getMessage());
         }
 
     }
