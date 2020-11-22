@@ -64,7 +64,7 @@ class Main {
          */
         config.setCrossOverAlgorithm(new TwoPointCrossOver());
         config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
-        config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>());
+        config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>(0.25f, fitnessCalculator));
         // Number of GA runs
         final int runs = 20;
 
