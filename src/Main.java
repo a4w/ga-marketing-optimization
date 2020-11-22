@@ -1,3 +1,7 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -61,24 +65,44 @@ class Main {
         config.setCrossOverAlgorithm(new TwoPointCrossOver());
         config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
         config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>());
-
+        // Number of GA runs
         final int runs = 20;
-        ChannelAllocationChromosome overallWinner = null;
-        float best_fitness = -1;
-        for (int RUN = 1; RUN <= runs; ++RUN) {
-            GeneticAlgorithm<ChannelAllocationChromosome> ga = new GeneticAlgorithm<>(config);
-            ga.run();
-            ChannelAllocationChromosome winner = ga.getBest();
-            System.out.println("Run #" + String.valueOf(RUN) + ": " + winner.toString());
-            // Update overallWinner
-            float fitness = fitnessCalculator.calculate(winner);
-            if (fitness > best_fitness) {
-                overallWinner = winner;
-                best_fitness = fitness;
+
+        try {
+            // Open file (with timestamp as name)
+            String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss").format(LocalDateTime.now());
+            FileWriter output = new FileWriter(timestamp + ".log");
+
+            // Run GA and maximize fitness across runs
+            ChannelAllocationChromosome overallWinner = null;
+            float best_fitness = -1;
+            for (int RUN = 1; RUN <= runs; ++RUN) {
+                // New GA run
+                GeneticAlgorithm<ChannelAllocationChromosome> ga = new GeneticAlgorithm<>(config);
+                ga.run();
+                ChannelAllocationChromosome winner = ga.getBest();
+
+                // Update overallWinner
+                float fitness = fitnessCalculator.calculate(winner);
+                if (fitness > best_fitness) {
+                    overallWinner = winner;
+                    best_fitness = fitness;
+                }
+
+                // Write to file
+                final String log_line = "Run #" + String.valueOf(RUN) + ": " + winner.toString();
+                System.out.println(log_line);
+                output.write(log_line);
             }
+            // Write overall winner
+            final String end_log_line = "\n Over all winner across " + String.valueOf(runs) + " runs is: "
+                    + overallWinner.toString();
+            System.out.println(end_log_line);
+            output.write(end_log_line);
+            output.close();
+        } catch (Exception e) {
+            System.err.println("Couldn't open file");
         }
-        System.out
-                .println("\n Over all winner across " + String.valueOf(runs) + " runs is: " + overallWinner.toString());
 
     }
 }
