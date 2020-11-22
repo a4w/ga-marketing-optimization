@@ -51,7 +51,9 @@ class Main {
         config.setMutationProbability(0.01);
         config.setInitialPopulationSize(1000);
         config.setCrossOverProbability(0.85f);
-        config.setFitnessCalculator(new ChannelAllocationChromosomeFitnessCalculator(metaData));
+        IFitnessCalculator<ChannelAllocationChromosome> fitnessCalculator = new ChannelAllocationChromosomeFitnessCalculator(
+                metaData);
+        config.setFitnessCalculator(fitnessCalculator);
         /*
          * config.setMutationAlgorithm(new
          * ChannelAllocationChromosomeUniformMutation(metaData));
@@ -61,12 +63,22 @@ class Main {
         config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>());
 
         final int runs = 20;
+        ChannelAllocationChromosome overallWinner = null;
+        float best_fitness = -1;
         for (int RUN = 1; RUN <= runs; ++RUN) {
             GeneticAlgorithm<ChannelAllocationChromosome> ga = new GeneticAlgorithm<>(config);
             ga.run();
             ChannelAllocationChromosome winner = ga.getBest();
-            System.out.println(winner.toString());
+            System.out.println("Run #" + String.valueOf(RUN) + ": " + winner.toString());
+            // Update overallWinner
+            float fitness = fitnessCalculator.calculate(winner);
+            if (fitness > best_fitness) {
+                overallWinner = winner;
+                best_fitness = fitness;
+            }
         }
+        System.out
+                .println("\n Over all winner across " + String.valueOf(runs) + " runs is: " + overallWinner.toString());
 
     }
 }
