@@ -10,9 +10,9 @@ class GeneticAlgorithmConfig<T extends IChromosome> {
     // Parameters
     private int initialPopulationSize;
     private int numberOfGenerations;
-    private double selectionsPercent;
-    private double crossOverProbability;
-    private double mutationProbability;
+    private float selectionsPercent;
+    private float crossOverProbability;
+    private float mutationProbability;
 
     public IChromosomeGenerator<T> getChromosomeGenerator() {
         return chromosomeGenerator;
@@ -78,27 +78,27 @@ class GeneticAlgorithmConfig<T extends IChromosome> {
         this.numberOfGenerations = numberOfGenerations;
     }
 
-    public double getSelectionsPercent() {
+    public float getSelectionsPercent() {
         return selectionsPercent;
     }
 
-    public void setSelectionsPercent(double selectionsPercent) {
+    public void setSelectionsPercent(float selectionsPercent) {
         this.selectionsPercent = selectionsPercent;
     }
 
-    public double getCrossOverProbability() {
+    public float getCrossOverProbability() {
         return crossOverProbability;
     }
 
-    public void setCrossOverProbability(double crossOverProbability) {
+    public void setCrossOverProbability(float crossOverProbability) {
         this.crossOverProbability = crossOverProbability;
     }
 
-    public double getMutationProbability() {
+    public float getMutationProbability() {
         return mutationProbability;
     }
 
-    public void setMutationProbability(double mutationProbability) {
+    public void setMutationProbability(float mutationProbability) {
         this.mutationProbability = mutationProbability;
     }
 
