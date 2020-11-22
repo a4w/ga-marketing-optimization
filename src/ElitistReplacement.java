@@ -14,7 +14,7 @@ class ElitistReplacement<T extends IChromosome> implements IReplacementAlgorithm
     @Override
     public ArrayList<T> getNewPopulation(ArrayList<T> oldPopulation, ArrayList<T> newGeneration) {
         // How much to keep from old population
-        final int toKeep = (int) this.k * oldPopulation.size();
+        final int toKeep = (int) (this.k * oldPopulation.size());
 
         ArrayList<ChromosomeFitnessPair> fitness_list = new ArrayList<>();
         for (int i = 0; i < oldPopulation.size(); ++i) {
