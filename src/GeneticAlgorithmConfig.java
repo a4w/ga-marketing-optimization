@@ -13,6 +13,7 @@ class GeneticAlgorithmConfig<T extends IChromosome> {
     private float selectionsPercent;
     private float crossOverProbability;
     private float mutationProbability;
+    private float nonUniformityDegree;
 
     public IChromosomeGenerator<T> getChromosomeGenerator() {
         return chromosomeGenerator;
@@ -102,4 +103,6 @@ class GeneticAlgorithmConfig<T extends IChromosome> {
         this.mutationProbability = mutationProbability;
     }
 
+    public Float getNonUniformityDegree() {return nonUniformityDegree;}
+    public void setNonUniformityDegree(Float nonUniformityDegree) {this.nonUniformityDegree = nonUniformityDegree;}
 }
