@@ -3,10 +3,12 @@ import java.util.ArrayList;
 class GeneticAlgorithm<T extends IChromosome> {
     private GeneticAlgorithmConfig<T> config;
     private ArrayList<T> population;
+    private int currentGeneration;
 
     public GeneticAlgorithm(GeneticAlgorithmConfig<T> config) {
         this.config = config;
         this.population = this.generatePopulation(config.getInitialPopulationSize());
+        this.currentGeneration = 0;
     }
 
     private ArrayList<T> generatePopulation(int size) {
@@ -32,13 +34,13 @@ class GeneticAlgorithm<T extends IChromosome> {
             final double crossOverProbability = config.getCrossOverProbability();
             ArrayList<T> children = config.getCrossOverAlgorithm().cross(parents, crossOverProbability);
             // Mutate each
-            final double mutationProbability = config.getMutationProbability();
             for (int i = 0; i < children.size(); ++i) {
-                newPopulation.add(config.getMutationAlgorithm().mutate(children.get(i), mutationProbability));
+                newPopulation.add(config.getMutationAlgorithm().mutate(children.get(i), this));
             }
         }
         // Replace population
         this.population = config.getReplacementAlgorithm().getNewPopulation(this.population, newPopulation);
+        this.currentGeneration++;
     }
 
     public void run() {
@@ -64,5 +66,9 @@ class GeneticAlgorithm<T extends IChromosome> {
             }
         }
         return best;
+    }
+
+    public int getCurrentGeneration() {
+        return this.currentGeneration;
     }
 }
