@@ -62,6 +62,7 @@ class Main {
          * config.setMutationAlgorithm(new
          * ChannelAllocationChromosomeUniformMutation(metaData));
          */
+        config.setMutationAlgorithm(new DummyMutator());
         config.setCrossOverAlgorithm(new TwoPointCrossOver());
         config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
         config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>(0.25f, fitnessCalculator));
@@ -90,14 +91,14 @@ class Main {
                 }
 
                 // Write to file
-                final String log_line = "Run #" + String.valueOf(RUN) + ": " + winner.toString();
-                System.out.println(log_line);
+                final String log_line = "Run #" + String.valueOf(RUN) + ": " + winner.toString() + "\n";
+                System.out.print(log_line);
                 output.write(log_line);
             }
             // Write overall winner
-            final String end_log_line = "\n Over all winner across " + String.valueOf(runs) + " runs is: "
-                    + overallWinner.toString();
-            System.out.println(end_log_line);
+            final String end_log_line = "\nOver all winner across " + String.valueOf(runs) + " runs is: "
+                    + overallWinner.toString() + "\n";
+            System.out.print(end_log_line);
             output.write(end_log_line);
             output.close();
         } catch (Exception e) {
@@ -105,4 +106,13 @@ class Main {
         }
 
     }
+}
+
+class DummyMutator implements IMutationAlgorithm<ChannelAllocationChromosome> {
+
+    @Override
+    public ChannelAllocationChromosome mutate(ChannelAllocationChromosome chromosome, double geneMutationProbability) {
+        return chromosome;
+    }
+
 }
