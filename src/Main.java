@@ -1,4 +1,5 @@
 import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -87,19 +88,32 @@ class Main {
                 }
 
                 // Write to file
-                final String log_line = "Run #" + String.valueOf(RUN) + ": " + winner.toString() + "\n";
-                System.out.print(log_line);
-                output.write(log_line);
+                String log = "Run #" + String.valueOf(RUN) + ": \n"
+                        + chromosomeHumanFormat(winner, name_list, roi_list, totalBudget) + "\n";
+                System.out.print(log);
+                output.write(log);
             }
             // Write overall winner
-            final String end_log_line = "\nOver all winner across " + String.valueOf(runs) + " runs is: "
-                    + overallWinner.toString() + "\n";
+            final String end_log_line = "\nOver all winner across " + String.valueOf(runs) + " runs is: \n"
+                    + chromosomeHumanFormat(overallWinner, name_list, roi_list, totalBudget) + "\n";
             System.out.print(end_log_line);
             output.write(end_log_line);
             output.close();
-        } catch (Exception e) {
-            System.err.println("Couldn't open file");
+        } catch (IOException e) {
+            System.err.println("Couldn't open file: " + e.getMessage());
         }
 
+    }
+
+    private static String chromosomeHumanFormat(ChannelAllocationChromosome chromosome, List<String> name_list,
+            List<Float> roi_list, float totalBudget) {
+        StringBuilder builder = new StringBuilder();
+        float totalProfit = 0;
+        for (int i = 0; i < chromosome.getGenes().size(); ++i) {
+            builder.append("\t" + name_list.get(i) + " -> " + chromosome.getGene(i) + "k \n");
+            totalProfit += chromosome.getGene(i) * roi_list.get(i);
+        }
+        builder.append("Total profile: " + String.valueOf(totalProfit) + "k");
+        return builder.toString();
     }
 }
