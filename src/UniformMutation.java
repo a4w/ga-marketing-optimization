@@ -1,17 +1,17 @@
 import java.util.List;
 
-public class NonUniformMutation implements IMutationAlgorithm<ChannelAllocationChromosome> {
+public class UniformMutation implements IMutationAlgorithm<ChannelAllocationChromosome> {
     private MetaData metaData;
     private GeneticAlgorithmConfig<ChannelAllocationChromosome> config;
 
-    NonUniformMutation(MetaData metaData, GeneticAlgorithmConfig<ChannelAllocationChromosome> config) {
+    UniformMutation(MetaData metaData, GeneticAlgorithmConfig<ChannelAllocationChromosome> config) {
         this.metaData = metaData;
         this.config = config;
     }
 
     @Override
     public ChannelAllocationChromosome mutate(ChannelAllocationChromosome chromosome,
-            GeneticAlgorithm<ChannelAllocationChromosome> algorithmState) {
+                                              GeneticAlgorithm<ChannelAllocationChromosome> algorithmState) {
         ChannelAllocationChromosome retChromosome = new ChannelAllocationChromosome(chromosome); // copy constructor
         List<Float> genes = retChromosome.getGenes();
         for (int i = 0; i < genes.size(); i++) {
@@ -23,12 +23,11 @@ public class NonUniformMutation implements IMutationAlgorithm<ChannelAllocationC
             Float upperRange = metaData.getChannelUpperLimit(i) - genes.get(i);
             if (decision <= 0.5f) // move towards lower limit
             {
-                genes.set(i, genes.get(i) - delta(lowerRange, algorithmState.getCurrentGeneration()));
+                genes.set(i, genes.get(i) - delta(lowerRange));
             } else // move towards upper limit
             {
-                genes.set(i, genes.get(i) + delta(upperRange, algorithmState.getCurrentGeneration()));
+                genes.set(i, genes.get(i) + delta(upperRange));
             }
-
             assert (genes.get(i) >= metaData.getChannelLowerLimit(i)
                     && genes.get(i) <= metaData.getChannelUpperLimit(i)); // assertion that gene is still within limits after mutation
         }
@@ -38,21 +37,8 @@ public class NonUniformMutation implements IMutationAlgorithm<ChannelAllocationC
             return chromosome;
     }
 
-    /**
-     *                                        b
-     *                          ( (1 - t/T) ^   )
-     * delta = range * (1 - r ^                   )
-     * r: a random float within [0:1]
-     * t: the current generation
-     * T: the max. number of generations
-     * b: a float parameter that controls the degree of non-uniformity within [0.5, 5]
-     */
-    private Float delta(Float range, int currentGeneration) {
-        Float r = RandomGenerator.randFloat(0, 1), b = config.getNonUniformityDegree();
-
-        int t = currentGeneration, T = config.getNumberOfGenerations();
-
-        Float ret = range * (1.0f - (float) Math.pow(r, Math.pow(1f - (t * 1.0f / T), b)));
+    private Float delta(Float range) {
+        Float ret = range * RandomGenerator.randFloat(0, 1);
         return ret;
     }
 }
