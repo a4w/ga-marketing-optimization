@@ -57,7 +57,7 @@ class Main {
          * ChannelAllocationChromosomeUniformMutation(metaData));
          */
         config.setCrossOverAlgorithm(new TwoPointCrossOver());
-        config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>());
+        config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
         config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>());
 
         GeneticAlgorithm<ChannelAllocationChromosome> ga = new GeneticAlgorithm<>(config);
