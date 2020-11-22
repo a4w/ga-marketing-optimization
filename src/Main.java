@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -50,9 +49,10 @@ class Main {
 
         MetaData metaData = new MetaData(totalBudget, nMarketChannels, roi_list, limit_list);
 
-        config.setSelectionsPercent(0.8f);
+        config.setChromosomeGenerator(new ChannelAllocationChromosomeGenerator(metaData));
+        config.setSelectionsPercent(0.75f);
         config.setNumberOfGenerations(1000);
-        config.setMutationProbability(0.01);
+        config.setMutationProbability(0.01f);
         config.setInitialPopulationSize(1000);
         config.setCrossOverProbability(0.85f);
         IFitnessCalculator<ChannelAllocationChromosome> fitnessCalculator = new ChannelAllocationChromosomeFitnessCalculator(
@@ -64,7 +64,7 @@ class Main {
          */
         config.setCrossOverAlgorithm(new TwoPointCrossOver());
         config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
-        config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>());
+        config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>(0.25f, fitnessCalculator));
         // Number of GA runs
         final int runs = 20;
 
@@ -90,14 +90,14 @@ class Main {
                 }
 
                 // Write to file
-                final String log_line = "Run #" + String.valueOf(RUN) + ": " + winner.toString();
-                System.out.println(log_line);
+                final String log_line = "Run #" + String.valueOf(RUN) + ": " + winner.toString() + "\n";
+                System.out.print(log_line);
                 output.write(log_line);
             }
             // Write overall winner
-            final String end_log_line = "\n Over all winner across " + String.valueOf(runs) + " runs is: "
-                    + overallWinner.toString();
-            System.out.println(end_log_line);
+            final String end_log_line = "\nOver all winner across " + String.valueOf(runs) + " runs is: "
+                    + overallWinner.toString() + "\n";
+            System.out.print(end_log_line);
             output.write(end_log_line);
             output.close();
         } catch (Exception e) {
