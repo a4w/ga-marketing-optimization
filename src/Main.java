@@ -69,7 +69,7 @@ class Main {
         try {
             // Open file (with timestamp as name)
             String timestamp = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH:mm:ss").format(LocalDateTime.now());
-            FileWriter output = new FileWriter(timestamp + ".log");
+            FileWriter output = new FileWriter("logs.txt");
 
             // Run GA and maximize fitness across runs
             ChannelAllocationChromosome overallWinner = null;
