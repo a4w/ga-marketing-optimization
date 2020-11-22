@@ -49,6 +49,7 @@ class Main {
 
         MetaData metaData = new MetaData(totalBudget, nMarketChannels, roi_list, limit_list);
 
+        config.setChromosomeGenerator(new ChannelAllocationChromosomeGenerator(metaData));
         config.setSelectionsPercent(0.8f);
         config.setNumberOfGenerations(1000);
         config.setMutationProbability(0.01);
