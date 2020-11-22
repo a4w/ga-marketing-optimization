@@ -60,11 +60,13 @@ class Main {
         config.setSelectionAlgorithm(new TournamentSelection<ChannelAllocationChromosome>(10));
         config.setReplacementAlgorithm(new ElitistReplacement<ChannelAllocationChromosome>());
 
-        GeneticAlgorithm<ChannelAllocationChromosome> ga = new GeneticAlgorithm<>(config);
-        ga.run();
-
-        ChannelAllocationChromosome winner = ga.getBest();
-        System.out.println(winner.toString());
+        final int runs = 20;
+        for (int RUN = 1; RUN <= runs; ++RUN) {
+            GeneticAlgorithm<ChannelAllocationChromosome> ga = new GeneticAlgorithm<>(config);
+            ga.run();
+            ChannelAllocationChromosome winner = ga.getBest();
+            System.out.println(winner.toString());
+        }
 
     }
 }
