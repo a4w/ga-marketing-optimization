@@ -20,7 +20,7 @@ class GeneticAlgorithm<T extends IChromosome> {
     public void iterate() {
         ArrayList<T> newPopulation = new ArrayList<>();
         final int numberOfParents = config.getCrossOverAlgorithm().getNumberOfParents();
-        final int numberOfSelections = (int) config.getSelectionsPercent() * this.population.size() / numberOfParents;
+        final int numberOfSelections = (int) (config.getSelectionsPercent() * this.population.size() / numberOfParents);
         for (int I = 1; I <= numberOfSelections; ++I) {
             // Selection
             ArrayList<T> parents = new ArrayList<>();

@@ -11,17 +11,17 @@ class TournamentSelection<T extends IChromosome> implements ISelectionAlgorithm<
     @Override
     public T select(ArrayList<T> population, IFitnessCalculator<T> calculator) {
         float best_fitness = -1;
-        T best_chromosome;
+        T best_chromosome = null;
         for (int i = 0; i < k; ++i) {
-            int s = RandomGenerator.randIndex(population);
-            T chromosome = population.get(i);
+            int random_index = RandomGenerator.randIndex(population);
+            T chromosome = population.get(random_index);
             float fitness = calculator.calculate(chromosome);
             if (fitness > best_fitness) {
                 best_fitness = fitness;
                 best_chromosome = chromosome;
             }
         }
-        return chromosome;
+        return best_chromosome;
     }
 
 }
